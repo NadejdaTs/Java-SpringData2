@@ -12,8 +12,8 @@ import java.util.List;
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 
-    @Query("SELECT a FROM Author a ORDER BY a.books.size DESC")
-    List<Author> findAllByBookSizeDesc();
+    /*@Query("SELECT a FROM Author a ORDER BY a.books.size DESC")
+    List<Author> findAllByBookSizeDesc();*/
 
     List<Author> findByFirstNameEndingWith(String endsWith);
 
@@ -22,4 +22,7 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
             " GROUP BY b.author" +
             " ORDER BY totalCopies DESC")
     List<AuthorNamesWithTotalCopies> getWithTotalCopies();
+
+    @Query(value = "CALL TOTAL_WRITTEN_BOOKS(:firstName, :lastName);", nativeQuery = true)
+    List<String> findTotalBooksByAuthorName(String firstName, String lastName);
 }

@@ -39,13 +39,10 @@ public class BookServiceImpl implements BookService {
             return;
         }
 
-        Files
-                .readAllLines(Path.of(BOOKS_FILE_PATH))
+        Files.readAllLines(Path.of(BOOKS_FILE_PATH))
                 .forEach(row -> {
                     String[] bookInfo = row.split("\\s+");
-
                     Book book = createBookFromInfo(bookInfo);
-
                     bookRepository.save(book);
                 });
     }
@@ -89,7 +86,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<String> findAllTitlesByEditionAndCopies(EditionType editionType, int copies) {
+    public List<String> findAllTitlesByEditionAndCopies(EditionType editionType, Integer copies) {
         return this.bookRepository.findByEditionTypeAndCopiesLessThan(editionType, copies)
                 .stream()
                 .map(Book::getTitle)
@@ -100,15 +97,15 @@ public class BookServiceImpl implements BookService {
     public List<Book> findAllPriceNotBetween(float lowerBound, float upperBound) {
         BigDecimal lower = BigDecimal.valueOf(lowerBound);
         BigDecimal upper = BigDecimal.valueOf(upperBound);
-        return this.bookRepository.findByPriceLessThenOrPriceGreaterThen(lower, upper);
+        return this.bookRepository.findByPriceLessThanOrPriceGreaterThan(lower, upper);
     }
 
     @Override
-    public List<Book> fingdNotReleasedIn(int releaseYear) {
-        //LocalDate before = LocalDate.of(releaseYear, 1, 1);
-        //LocalDate after = LocalDate.of(releaseYear, 12, 31);
+    public List<Book> findNotReleasedIn(int releaseYear) {
+        LocalDate before = LocalDate.of(releaseYear, 1, 1);
+        LocalDate after = LocalDate.of(releaseYear, 12, 31);
 
-        return this.bookRepository.findByReleaseDateYearNot(releaseYear);
+        return this.bookRepository.findByReleaseDateBeforeOrReleaseDateAfter(before, after);
     }
 
     @Override
@@ -151,7 +148,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public int deleteWithCopiesLessThan(int amount) {
-        return this.bookRepository.deleteByCopiesLessThen(amount);
+        return this.bookRepository.deleteByCopiesLessThan(amount);
     }
 
     private Book createBookFromInfo(String[] bookInfo) {

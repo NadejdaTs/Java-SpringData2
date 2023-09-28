@@ -32,12 +32,10 @@ public class AuthorServiceImpl implements AuthorService {
             return;
         }
 
-        Files
-                .readAllLines(Path.of(AUTHORS_FILE_PATH))
+        Files.readAllLines(Path.of(AUTHORS_FILE_PATH))
                 .forEach(row -> {
                     String[] fullName = row.split("\\s+");
                     Author author = new Author(fullName[0], fullName[1]);
-
                     authorRepository.save(author);
                 });
     }
@@ -53,7 +51,7 @@ public class AuthorServiceImpl implements AuthorService {
                 .orElse(null);
     }
 
-    @Override
+    /*@Override
     public List<String> getAllAuthorsOrderByCountOfTheirBooks() {
         return this.authorRepository
                 .findAllByBookSizeDesc()
@@ -63,7 +61,7 @@ public class AuthorServiceImpl implements AuthorService {
                         author.getLastName(),
                         author.getBooks().size()))
                 .collect(Collectors.toList());
-    }
+    }*/
 
     @Override
     public List<Author> findByFirstNameEndingWith(String endsWith) {
@@ -73,5 +71,10 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public List<AuthorNamesWithTotalCopies> getWithTotalCopies() {
         return this.authorRepository.getWithTotalCopies();
+    }
+
+    @Override
+    public List<String> findTotalBooksByAuthorName(String firstName, String lastName) {
+        return this.authorRepository.findTotalBooksByAuthorName(firstName, lastName);
     }
 }

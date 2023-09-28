@@ -18,11 +18,11 @@ public interface BookService {
 
     List<String> findAllTitlesByAgeRestriction(String ageRestriction);
 
-    List<String> findAllTitlesByEditionAndCopies(EditionType editionType, int copies);
+    List<String> findAllTitlesByEditionAndCopies(EditionType editionType, Integer copies);
 
     List<Book> findAllPriceNotBetween(float lowerBound, float upperBound);
 
-    List<Book> fingdNotReleasedIn(int releaseYear);
+    List<Book> findNotReleasedIn(int releaseYear);
 
     List<Book> findBooksReleasedBefore(String date);
 

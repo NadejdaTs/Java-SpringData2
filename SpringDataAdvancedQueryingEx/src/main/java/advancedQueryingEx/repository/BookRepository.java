@@ -27,13 +27,11 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query("SELECT b.title FROM Book b WHERE b.ageRestriction = :ageRestriction")
     List<String> findByAgeRestriction(@Param("ageRestriction") AgeRestriction restriction);
 
-    List<Book> findByEditionTypeAndCopiesLessThan(EditionType editionType, int copies);
+    List<Book> findByEditionTypeAndCopiesLessThan(EditionType editionType, Integer copies);
 
-    List<Book> findByPriceLessThenOrPriceGreaterThen(BigDecimal lowerBound, BigDecimal upperBound);
+    List<Book> findByPriceLessThanOrPriceGreaterThan(BigDecimal lowerBound, BigDecimal upperBound);
 
-    @Query("SELECT b.title FROM Book b WHERE YEAR(b.releaseDate) = :releaseYear")
-    List<Book> findByReleaseDateYearNot(int releaseYear);
-    //We can make this with ReleaseDateBeforeOrReleaseDateAfter(releaseDate)
+    List<Book> findByReleaseDateBeforeOrReleaseDateAfter(LocalDate before, LocalDate after);
 
     List<Book> findByTitleContaining(String search);
 
@@ -54,5 +52,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Modifying
     @Transactional
-    int deleteByCopiesLessThen(int amount);
+    int deleteByCopiesLessThan(int amount);
 }

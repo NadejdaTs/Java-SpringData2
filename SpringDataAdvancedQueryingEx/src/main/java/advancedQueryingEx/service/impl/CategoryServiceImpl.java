@@ -34,7 +34,6 @@ public class CategoryServiceImpl implements CategoryService {
                 .filter(row -> !row.isEmpty())
                 .forEach(categoryName -> {
                     Category category = new Category(categoryName);
-
                     categoryRepository.save(category);
                 });
     }
