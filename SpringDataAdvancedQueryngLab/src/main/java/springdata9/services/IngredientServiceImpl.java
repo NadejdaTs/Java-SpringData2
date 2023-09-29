@@ -24,6 +24,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
+    @Transactional
     public int deleteByName(String name) {
         return this.ingredientRepository.deleteByName(name);
     }
@@ -33,5 +34,19 @@ public class IngredientServiceImpl implements IngredientService {
     public void increasePriceByPercentage(double percent) {
         BigDecimal actualPercent = BigDecimal.valueOf(percent);
         this.ingredientRepository.increasePriceByPercent(actualPercent);
+    }
+
+    @Override
+    @Transactional
+    public int updatePriceByGivenName(String name, double percent) {
+        BigDecimal actualPercent = BigDecimal.valueOf(percent);
+        return this.ingredientRepository.updatePriceByGivenName(name, actualPercent);
+    }
+
+    @Override
+    @Transactional
+    public int updatePriceByListOfNames(List<String> listOfNames, double percent) {
+        BigDecimal actualPercent = BigDecimal.valueOf(percent);
+        return this.ingredientRepository.updatePriceByListOfNames(listOfNames, actualPercent);
     }
 }

@@ -46,6 +46,7 @@ public class Shampoo extends BaseEntity {
     }
 
     @Enumerated(EnumType.ORDINAL)
+    //@Enumerated(EnumType.STRING)
     @Column(name = "size")
     public Size getSize() {
         return this.size;

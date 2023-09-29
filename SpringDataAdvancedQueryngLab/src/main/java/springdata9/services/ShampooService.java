@@ -15,7 +15,7 @@ public interface ShampooService {
 
     int countPriceLowerThan(BigDecimal price);
 
-    //List<Shampoo> selectByIngredientsCount(long count);
+    //List<Shampoo> selectByIngredientsCount(int count);
 
     List<Shampoo> selectBySizeOrLabelId(Size size, int labelId);
     List<Shampoo> findBySizeOrderById(Size size);

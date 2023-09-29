@@ -16,9 +16,24 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
 
     List<Ingredient> findByNameInOrderByPriceAsc(List<String> listOfNames);
 
+    @Query("DELETE FROM Ingredient i" +
+            " WHERE i.name = :name")
+    @Modifying
     int deleteByName(String name);
 
-    @Query("UPDATE Ingredient i SET i.price = i.price * :multiplier")
+    @Query("UPDATE Ingredient i SET i.price = i.price + i.price * :multiplier")
     @Modifying
     void increasePriceByPercent(@Param("multiplier") BigDecimal percent);
+
+    @Query("UPDATE Ingredient i" +
+            " SET i.price = i.price + i.price * :percent" +
+            " WHERE i.name = :name")
+    @Modifying
+    int updatePriceByGivenName(String name, BigDecimal percent);
+
+    @Query("UPDATE Ingredient i" +
+            " SET i.price = i.price + i.price * :percent" +
+            " WHERE i.name IN (:listOfNames)")
+    @Modifying
+    int updatePriceByListOfNames(List<String> listOfNames, BigDecimal percent);
 }

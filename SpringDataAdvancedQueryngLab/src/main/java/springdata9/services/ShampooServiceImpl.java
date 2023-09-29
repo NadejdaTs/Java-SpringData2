@@ -1,6 +1,5 @@
 package springdata9.services;
 
-import springdata9.entities.Label;
 import springdata9.entities.Shampoo;
 import springdata9.entities.Size;
 import springdata9.repositories.LabelRepository;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ShampooServiceImpl implements ShampooService{
@@ -27,15 +25,12 @@ public class ShampooServiceImpl implements ShampooService{
 
     @Override
     public List<Shampoo> selectBySizeOrLabelId(Size size, int labelId) {
-        //Optional<Label> label = this.labelRepository.findById((long)labelId);
-        //return this.shampooRepository.findBySizeOrLabelOrderByPriceAsc(label);
-        //return this.shampooRepository.findBySizeOrLabelOrderByPriceAsc(size, labelId);
-        return null;
+        return this.shampooRepository.findBySizeOrLabelIdOrderByPriceAsc(size, labelId);
     }
 
     @Override
     public List<Shampoo> selectMoreExpensiveThan(BigDecimal price) {
-        return this.shampooRepository.findByPriceGreaterThanOrderByPriceAsc(price);
+        return this.shampooRepository.findByPriceGreaterThanOrderByPriceDesc(price);
     }
 
     @Override
@@ -44,7 +39,7 @@ public class ShampooServiceImpl implements ShampooService{
     }
 
     /*@Override
-    public List<Shampoo> selectByIngredientsCount(long count) {
+    public List<Shampoo> selectByIngredientsCount(int count) {
         return this.shampooRepository.findByIngredientCountLessThan(count);
     }*/
 

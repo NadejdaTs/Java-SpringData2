@@ -10,7 +10,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class Runner implements CommandLineRunner {
@@ -26,19 +30,9 @@ public class Runner implements CommandLineRunner {
     }
 
     @Override
-    @Transactional
+    //@Transactional
     public void run(String... args) throws Exception {
-        this.shampooService.selectMoreExpensiveThan(BigDecimal.valueOf(5))
-                .forEach(System.out::println);
-
-        //try last
-        /*this.shampooService.selectBySizeOrLabelId(Size.MEDIUM, 10)
-                .forEach(System.out::println);*/
-
-
-        /*this.ingredientService.deleteByName("Nettle");
-        this.ingredientService.increasePriceByPercentage(0.1);
-                //.forEach(System.out::println);*/
+        Scanner sc = new Scanner(System.in);
     }
 
     private void demo(){
@@ -53,34 +47,44 @@ public class Runner implements CommandLineRunner {
         this.shampooRepository.findBySizeOrderById(size)
                 .forEach(System.out::println);*/
 
+//        01
+        /*this.shampooService.selectBySize(Size.MEDIUM)
+                .forEach(System.out::println);*/
+//        02
+        //this.shampooService.selectBySizeOrLabelId(Size.MEDIUM, 10).forEach(System.out::println);
+//        03
+        /*this.shampooService.selectMoreExpensiveThan(BigDecimal.valueOf(5))
+                .forEach(System.out::println);*/
+//        04
+        /*this.ingredientService.selectNameStartWith("M")
+                .forEach(System.out::println);*/
+//        05
+        /*List<String> listOfNames = List.of("Lavender", "Herbs", "Apple");
+        this.ingredientService.selectInNames(listOfNames)
+                .forEach(System.out::println);*/
+//        06
+        //System.out.println(this.shampooService.countPriceLowerThan(BigDecimal.valueOf(8.5)));
+//        07
         /*String first = sc.nextLine();
         String second = sc.nextLine();
 
         Set<String> names = Set.of(first, second);
         this.shampooRepository.findByIngredientsNames(names)
                 .forEach(System.out::println);*/
-        //01
-        /*this.shampooService.selectBySize(Size.MEDIUM)
-                .forEach(System.out::println);*/
-        //02
-        //this.shampooService.selectBySizeOrLabelId(Size.MEDIUM, 10).forEach(System.out::println);
-        //03 - Order By must to do
-        /*this.shampooService.selectMoreExpensiveThan(BigDecimal.valueOf(5))
-                .forEach(System.out::println);*/
-        //04
-        /*this.ingredientService.selectNameStartWith("M")
-                .forEach(System.out::println);*/
-        //05
-        /*List<String> listOfNames = List.of("Lavender", "Herbs", "Apple");
-        this.ingredientService.selectInNames(listOfNames)
-                .forEach(System.out::println);*/
-        //06
-        //System.out.println(this.shampooService.countPriceLowerThan(BigDecimal.valueOf(8.5)));
-
-
-        //08
-        //this does not work
+//        08
         /*this.shampooService.selectByIngredientsCount(2)
                 .forEach(System.out::println);*/
+//        09
+        //this.ingredientService.deleteByName("Apple");
+//        10
+        //this.ingredientService.increasePriceByPercentage(0.1);
+        /*String name = sc.nextLine();
+        this.ingredientService.updatePriceByGivenName(name, 0.1);*/
+//        11
+        /*List<String> listOfNames = Arrays.stream(sc.nextLine().split(" "))
+                .collect(Collectors.toList());
+        int cntUpdated = this.ingredientService.updatePriceByListOfNames(listOfNames, 0.1);
+        System.out.println(cntUpdated);*/
+
     }
 }

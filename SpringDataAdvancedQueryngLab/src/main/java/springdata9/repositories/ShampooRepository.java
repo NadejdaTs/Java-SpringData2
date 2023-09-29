@@ -23,14 +23,15 @@ public interface ShampooRepository extends JpaRepository<Shampoo, Long> {
 
     List<Shampoo> findBySize(Size size);
 
-    //List<Shampoo> findBySizeOrLabelOrderByPriceAsc(Optional<Label> label);
+    List<Shampoo> findBySizeOrLabelIdOrderByPriceAsc(Size size, int labelId);
 
-    List<Shampoo> findByPriceGreaterThanOrderByPriceAsc(BigDecimal price);
+    List<Shampoo> findByPriceGreaterThanOrderByPriceDesc(BigDecimal price);
 
     int countByPriceLessThan(BigDecimal price);
 
-    /*@Query("SELECT s FROM Shampoo AS s" +
-            " JOIN Ingredient AS i " +
-            " WHERE i.shampoos.size < :count")
-    List<Shampoo> findByIngredientCountLessThan(long count);*/
+    /*@Query("SELECT s FROM Shampoo s" +
+            //" JOIN s.ingredients AS i" +
+            " WHERE s.ingredients.size < :count")
+    List<Shampoo> findByIngredientCountLessThan(int count);*/
+
 }
