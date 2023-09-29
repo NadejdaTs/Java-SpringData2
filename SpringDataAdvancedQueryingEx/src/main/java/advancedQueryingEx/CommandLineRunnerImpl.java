@@ -36,6 +36,12 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 //        printAllAuthorsAndNumberOfTheirBooks();
 //        printALlBooksByAuthorNameOrderByReleaseDate("George", "Powell");
         Scanner sc = new Scanner(System.in);
+
+        String title = sc.nextLine();
+        BookSummary summary = this.bookService.getInformationForTitle(title);
+        System.out.println(summary.getTitle() + " " + summary.getEditionType() + " " + summary.getAgeRestriction() + " " + summary.getPrice());
+
+
 //        01
         /*String restriction = sc.nextLine();
         this.bookService.findAllTitlesByAgeRestriction(restriction)

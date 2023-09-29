@@ -1,4 +1,4 @@
-package springdatamodelmapper.labs.dto;
+package springdatamodelmapper.labs.entities.dto;
 
 import springdatamodelmapper.labs.entities.Employee;
 
@@ -8,6 +8,8 @@ public class CustomDTO {
     private String firstName;
     private String lastName;
     private int managerLastNameLength;
+
+    public CustomDTO() {}
 
     /* If there are many fields, it will be annoying
     public CustomDTO(Employee employee){

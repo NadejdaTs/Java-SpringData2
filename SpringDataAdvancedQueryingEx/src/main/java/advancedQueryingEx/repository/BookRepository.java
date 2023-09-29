@@ -42,6 +42,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query("SELECT b.title AS title, b.editionType AS editionType, b.ageRestriction AS ageRestriction, b.price AS price FROM Book b"+
             " WHERE b.title = :title")
+    /*@Query("SELECT new advancedQueryingEx.model.entity.BookSummaryImpl(b.title, b.editionType, b.ageRestriction, b.price" +
+            " FROM Book b"+
+            " WHERE b.title = :title")*/
     BookSummary findSummaryForTitle(String title);
 
     @Modifying

@@ -1,4 +1,4 @@
-package springdatamodelmapper.labs.dto;
+package springdatamodelmapper.labs.entities.dto;
 
 import jakarta.persistence.Column;
 
@@ -10,14 +10,14 @@ public class EmployeeSpringDTO {
     private BigDecimal salary;
     private String managerLastName;
 
-    //public EmployeeSpringDTO() {}
+    /*public EmployeeSpringDTO() {}
 
     public EmployeeSpringDTO(String firstName, String lastName, BigDecimal salary, String managerLastName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.salary = salary;
         this.managerLastName = managerLastName;
-    }
+    }*/
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;

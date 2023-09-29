@@ -24,7 +24,7 @@ public class ManagerDTO {
     public String toString(){
         String empl = this.subordinates.stream()
                 .map(EmployeeDTO::toString)
-                .map(s -> "    - " + s)
+                .map(s -> "\t- " + s)
                 .collect(Collectors.joining(System.lineSeparator()));
 
         return String.format("%s %s | Employees: %d%n%s%n",

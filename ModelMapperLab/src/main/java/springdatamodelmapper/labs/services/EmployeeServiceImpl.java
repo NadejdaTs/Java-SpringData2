@@ -1,6 +1,6 @@
 package springdatamodelmapper.labs.services;
 
-import springdatamodelmapper.labs.dto.EmployeeSpringDTO;
+import springdatamodelmapper.labs.entities.dto.EmployeeSpringDTO;
 import springdatamodelmapper.labs.entities.Employee;
 import springdatamodelmapper.labs.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -7,52 +7,43 @@ public class EmployeeDTO {
     private String firstName;
     private String lastName;
     private BigDecimal salary;
-    //private String addressCity;
+    private String addressCity;
+    private String addressCountry;
 
-    /*@Override
-    public String toString() {
-        return "EmployeeDTO{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", salary=" + salary +
-                //", addressCity='" + addressCity + '\'' +
-                '}';
-    }*/
+    public EmployeeDTO() {
+    }
+
     @Override
+    public String toString() {
+        return "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", salary=" + salary + '\'' +
+                ", addressCity='" + addressCity + '\'' +
+                ", addressCountry='" + addressCountry + '\'';
+    }
+    /*@Override
     public String toString(){
         return String.format("%s %s %.2f",
                 this.firstName, this.lastName, this.salary);
-    }
-
-    /*public String getAddressCity() {
-        return addressCity;
-    }
-
-    public void setAddressCity(String addressCity) {
-        this.addressCity = addressCity;
     }*/
-
-    public String getFirstName() {
-        return firstName;
-    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public BigDecimal getSalary() {
-        return salary;
-    }
-
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
+    }
+
+    public void setAddressCity(String addressCity) {
+        this.addressCity = addressCity;
+    }
+
+    public void setAddressCountry(String addressCountry) {
+        this.addressCountry = addressCountry;
     }
 }

@@ -1,12 +1,12 @@
 package springdatamodelmapper.labs;
 
-import springdatamodelmapper.labs.dto.CustomDTO;
-import springdatamodelmapper.labs.dto.EmployeeSpringDTO;
+import org.modelmapper.Converter;
+import org.modelmapper.TypeMap;
+import springdatamodelmapper.labs.entities.dto.CustomDTO;
+import springdatamodelmapper.labs.entities.dto.EmployeeSpringDTO;
 import springdatamodelmapper.labs.entities.Employee;
 import springdatamodelmapper.labs.services.EmployeeService;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -28,7 +28,7 @@ public class ConsoleRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        //this.persist();
+//        this.persist();
         /*Optional<Employee> managerOp = this.employeeService.findOneById(2);
         Employee manager = managerOp.get();
 
@@ -36,20 +36,24 @@ public class ConsoleRunner implements CommandLineRunner {
         EmployeeSpringDTO dto = mapper.map(manager, EmployeeSpringDTO.class);
         System.out.println(dto);*/
 
+//        when use List<Employee> as return type
         /*List<Employee> listOfEmployees = this.employeeService.findEmployeesBornBefore(1990);
         ModelMapper mapper = new ModelMapper();
 
         listOfEmployees.stream()
                 .map(e -> mapper.map(e, EmployeeSpringDTO.class))
                 .forEach(System.out::println);*/
-        /*this.employeeService.findEmployeesBornBefore(1990)
-                .forEach(System.out::println);*/
-        this.employeeService.findEmployeesBornBefore(1990)
+
+//      when use List<EmployeeSpringDTO> as return type
+//      it should work, but not here
+        this.employeeService.findEmployeesBornBefore(1991)
                 .forEach(System.out::println);
-        List<Employee> all = this.employeeService.findAll();
+
+        /*List<Employee> all = this.employeeService.findAll();
 
         ModelMapper mapper = new ModelMapper();
-        TypeMap<Employee, CustomDTO> employeeToCustom = mapper.createTypeMap(Employee.class, CustomDTO.class);
+        TypeMap<Employee, CustomDTO> employeeToCustom =
+                mapper.createTypeMap(Employee.class, CustomDTO.class);
 
         Converter<Employee, Integer> getLastNameLength = ctx -> ctx.getSource() == null ? null : ctx.getSource().getLastName().length();
 
@@ -60,18 +64,24 @@ public class ConsoleRunner implements CommandLineRunner {
 
         all.stream()
                 .map(employeeToCustom::map)
-                .forEach(System.out::println);
+                .forEach(System.out::println);*/
     }
 
     private void persist() {
-        Employee manager = new Employee("Mrs.", "Manager", BigDecimal.valueOf(5000), LocalDate.now(), null);
-        Employee firstEmployee = new Employee("first", "last", BigDecimal.TEN, LocalDate.now(), manager);
-        Employee secEmployee = new Employee("first", "last", BigDecimal.TEN, LocalDate.now(), manager);
+        Employee manager = new Employee("Mrs.", "Manager",
+                BigDecimal.valueOf(5000), LocalDate.now(), null);
 
+        Employee firstEmployee = new Employee("first", "second",
+                BigDecimal.TEN, LocalDate.now(), manager);
         this.employeeService.save(firstEmployee);
-        Employee employee = this.employeeService
+
+        //if we don`t say get() -  it will take Optional<Employee>
+        manager = this.employeeService
                 .findOneById(firstEmployee.getManager().getId())
-                .get(); //if we don`t say get() -  it will take Optional<Employee>
+                .get();
+
+        Employee secEmployee = new Employee("second", "last",
+                BigDecimal.TEN, LocalDate.now(), manager);
         this.employeeService.save(secEmployee);
     }
 }
