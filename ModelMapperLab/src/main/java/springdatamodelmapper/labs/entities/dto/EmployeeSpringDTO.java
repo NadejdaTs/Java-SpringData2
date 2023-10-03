@@ -1,7 +1,5 @@
 package springdatamodelmapper.labs.entities.dto;
 
-import jakarta.persistence.Column;
-
 import java.math.BigDecimal;
 
 public class EmployeeSpringDTO {
@@ -9,6 +7,9 @@ public class EmployeeSpringDTO {
     private String lastName;
     private BigDecimal salary;
     private String managerLastName;
+
+    public EmployeeSpringDTO() {
+    }
 
     /*public EmployeeSpringDTO() {}
 

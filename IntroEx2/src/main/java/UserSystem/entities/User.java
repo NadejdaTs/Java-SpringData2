@@ -62,7 +62,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        /*if(password.length() < 6 || password.length() > 50){
+        if(password.length() < 6 || password.length() > 50){
             throw new IllegalArgumentException("Invalid length of password!");
         }
         boolean hasDigit = false;
@@ -87,7 +87,7 @@ public class User {
         }
         if(!hasSpecialSymbol || !hasUpperCase || !hasLowerCase || !hasDigit){
             throw new IllegalArgumentException("Invalid password!");
-        }*/
+        }
         this.password = password;
     }
 

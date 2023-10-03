@@ -46,16 +46,19 @@ public class ConsoleRunner implements CommandLineRunner {
 
 //      when use List<EmployeeSpringDTO> as return type
 //      it should work, but not here
-        this.employeeService.findEmployeesBornBefore(1991)
-                .forEach(System.out::println);
+        /*this.employeeService.findEmployeesBornBefore(1991)
+                .forEach(System.out::println);*/
 
-        /*List<Employee> all = this.employeeService.findAll();
+        List<Employee> all = this.employeeService.findAll();
 
         ModelMapper mapper = new ModelMapper();
         TypeMap<Employee, CustomDTO> employeeToCustom =
                 mapper.createTypeMap(Employee.class, CustomDTO.class);
 
-        Converter<Employee, Integer> getLastNameLength = ctx -> ctx.getSource() == null ? null : ctx.getSource().getLastName().length();
+        Converter<Employee, Integer> getLastNameLength =
+                ctx -> ctx.getSource() == null
+                        ? null
+                        : ctx.getSource().getLastName().length();
 
         employeeToCustom.addMappings(mapping ->
                 mapping.when(Objects::nonNull)
@@ -64,7 +67,7 @@ public class ConsoleRunner implements CommandLineRunner {
 
         all.stream()
                 .map(employeeToCustom::map)
-                .forEach(System.out::println);*/
+                .forEach(System.out::println);
     }
 
     private void persist() {
