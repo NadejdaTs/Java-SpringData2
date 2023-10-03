@@ -1,7 +1,7 @@
 package springdatamodelmapperex.entites;
 
-import jakarta.persistence.*;
 import springdatamodelmapperex.entites.users.User;
+import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,11 +1,11 @@
 package springdatamodelmapperex;
 
+import springdatamodelmapperex.exceptions.UserNotLoggedInException;
+import springdatamodelmapperex.exceptions.ValidationException;
+import springdatamodelmapperex.services.ExecutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import springdatamodelmapperex.entites.exceptions.UserNotLoggedInException;
-import springdatamodelmapperex.entites.exceptions.ValidationException;
-import springdatamodelmapperex.services.ExecutorService;
 
 import java.util.Scanner;
 
@@ -23,14 +23,18 @@ public class ConsoleRunner implements CommandLineRunner {
         Scanner sc = new Scanner(System.in);
         String command = sc.nextLine();
 
+        //For Json test
+        String commandData = sc.nextLine();
+
+//        while(command){
         String result;
-        while(!command.equals("END")) {
-            try {
-                result = executorService.execute(command);
-            } catch (ValidationException | UserNotLoggedInException ex) {
-                result = ex.getMessage();
-            }
-            System.out.println(result);
+        try{
+//            result = executorService.execute(command);
+            result = executorService.execute(command, commandData);
+        }catch(ValidationException | UserNotLoggedInException ex){
+            result = ex.getMessage();
         }
+
+        System.out.println(result);
     }
 }

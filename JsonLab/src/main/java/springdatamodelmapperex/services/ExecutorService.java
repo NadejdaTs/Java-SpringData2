@@ -5,8 +5,7 @@ public interface ExecutorService {
     String LOGIN_USER_COMMAND = "LoginUser";
     String LOGOUT_USER_COMMAND = "Logout";
     String ADD_GAME_COMMAND = "AddGame";
-
-    String execute(String command);
+    String execute(String command, String commandData);
 
 //    {
 //        "commandName": "RegisterUser",

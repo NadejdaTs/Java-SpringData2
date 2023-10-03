@@ -1,6 +1,6 @@
 package springdatamodelmapperex.entites.users;
 
-import springdatamodelmapperex.entites.exceptions.ValidationException;
+import springdatamodelmapperex.exceptions.ValidationException;
 
 /**
  * Validates the data for registering a user.
@@ -34,27 +34,6 @@ public class RegisterDTO {
             throw new ValidationException("Email must contain @ and .");
         }
 //        TODO: Validate password
-        /*if(password.length() < 6 || password.length() > 50){
-            throw new IllegalArgumentException("Invalid length of password!");
-        }
-        boolean hasDigit = false;
-        boolean hasLowerCase = false;
-        boolean hasUpperCase = false;
-        for (int i = 0; i < password.length(); i++) {
-            char currChar = password.charAt(i);
-            if(Character.isDigit(currChar)){
-                hasDigit = true;
-            }
-            if(Character.isLowerCase(currChar)){
-                hasLowerCase = true;
-            }
-            if(Character.isUpperCase(currChar)){
-                hasUpperCase = true;
-            }
-        }
-        if(!hasUpperCase || !hasLowerCase || !hasDigit){
-            throw new IllegalArgumentException("Invalid password!");
-        }*/
         if(!password.equals(confirmPassword)){
             throw new ValidationException("Password and confirm password must match!");
         }

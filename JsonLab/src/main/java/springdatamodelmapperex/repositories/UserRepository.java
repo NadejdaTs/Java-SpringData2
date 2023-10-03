@@ -1,8 +1,8 @@
 package springdatamodelmapperex.repositories;
 
+import springdatamodelmapperex.entites.users.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import springdatamodelmapperex.entites.users.User;
 
 import java.util.Optional;
 

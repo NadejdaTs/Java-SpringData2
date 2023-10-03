@@ -1,14 +1,14 @@
 package springdatamodelmapperex.services.servicesImpl;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import springdatamodelmapperex.entites.exceptions.UserNotLoggedInException;
+import springdatamodelmapperex.exceptions.UserNotLoggedInException;
+import springdatamodelmapperex.repositories.UserRepository;
 import springdatamodelmapperex.entites.users.LoginDTO;
 import springdatamodelmapperex.entites.users.RegisterDTO;
 import springdatamodelmapperex.entites.users.User;
-import springdatamodelmapperex.repositories.UserRepository;
 import springdatamodelmapperex.services.UserService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
@@ -40,11 +40,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> login(LoginDTO loginData) {
         ensureNoLoggedUser();
-        Optional<User> user = this.userRepository.findByEmailAndPassword(
-                loginData.getEmail(),
-                loginData.getPassword());
+        Optional<User> user = this.userRepository.findByEmailAndPassword(loginData.getEmail(), loginData.getPassword());
 
-        //Save the user for all next operations
         if(user.isPresent()){
             this.currentUser = user.get();
         }
@@ -56,6 +53,7 @@ public class UserServiceImpl implements UserService {
             //throw exception / return;
         }
     }
+
 
     @Override
     public User getLoggedUser(){
@@ -69,7 +67,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void logout() {
 //        if(currentUser != null){
-//        TODO: Cannot log out. No user logged in.
+//        TODO: Cannot lo out. No user logged in.
         this.currentUser = null;
     }
 }

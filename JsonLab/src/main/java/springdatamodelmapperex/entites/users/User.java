@@ -1,8 +1,8 @@
 package springdatamodelmapperex.entites.users;
 
-import jakarta.persistence.*;
 import springdatamodelmapperex.entites.Game;
 import springdatamodelmapperex.entites.Order;
+import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
