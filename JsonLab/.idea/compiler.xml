@@ -7,11 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ModelMapperEx" />
+        <module name="JsonLab" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="JsonLab" options="-parameters" />
       <module name="ModelMapperEx" options="-parameters" />
     </option>
   </component>

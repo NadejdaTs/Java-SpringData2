@@ -20,7 +20,7 @@ public class User {
     private String fullName;
     private boolean admin;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Game> games;
 
     @OneToMany(mappedBy = "buyer", targetEntity = Order.class)

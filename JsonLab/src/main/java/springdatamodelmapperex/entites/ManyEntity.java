@@ -15,8 +15,7 @@ public class ManyEntity {
     private int age;
 
     @ManyToMany
-    @JoinTable
-//            (name = "many_entity_friends",
+//    @JoinTable(name = "many_entity_friends",
 //    joinColumns = @JoinColumn(name = "many_entity_id", referencedColumnName = "id"),
 //    inverseJoinColumns = @JoinColumn(name = "friend_id", referencedColumnName = "id"))
     private Set<ManyEntity> friends;

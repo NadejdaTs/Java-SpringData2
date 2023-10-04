@@ -1,5 +1,9 @@
 package springdatamodelmapperex.services.servicesImpl;
 
+import springdatamodelmapperex.entites.Game;
+import springdatamodelmapperex.LocalDateTypeAdapter;
+import springdatamodelmapperex.repositories.GameRepository;
+import springdatamodelmapperex.repositories.UserRepository;
 import springdatamodelmapperex.services.ExecutorService;
 import springdatamodelmapperex.services.UserService;
 import springdatamodelmapperex.entites.users.LoginDTO;
@@ -12,20 +16,27 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ExecutorServiceImpl implements ExecutorService {
     private final UserService userService;
+    private final UserRepository userRepository;
+    private final GameRepository gameRepository;
 
     private final Gson gson;
     private final ModelMapper mapper;
 
     @Autowired
-    public ExecutorServiceImpl(UserService userService, Gson gson) {
+    public ExecutorServiceImpl(UserService userService, Gson gson, UserRepository userRepository, GameRepository gameRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
+        this.gameRepository = gameRepository;
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()
+                .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
                 .create();
         this.mapper = new ModelMapper();
     }
@@ -36,22 +47,45 @@ public class ExecutorServiceImpl implements ExecutorService {
         //String commandName = commandParts[0];
 
         Object commandOutput = switch (commandName) {
-            //instead of data, was commandParts
             case REGISTER_USER_COMMAND -> registerUser(data);
             case LOGIN_USER_COMMAND -> loginUser(data);
             case LOGOUT_USER_COMMAND -> logoutUser();
-            case ADD_GAME_COMMAND -> addGame();
+            case ADD_GAME_COMMAND -> addGame(data);
+            case DELETE_GAME_COMMAND -> deleteGame(data);
             default -> "Unknown command";
         };
         return this.gson.toJson(commandOutput);
     }
 
-    private String addGame() {
+    private String addGame(String data) {
         User loggedUser = this.userService.getLoggedUser();
-        /*if(!loggedUser.isAdmin()){
+        if(!loggedUser.isAdmin()){
             throw new UnsupportedOperationException("User not admin!");
-        }*/
-        return null;
+        }
+
+        Game game = this.gson.fromJson(data, Game.class);
+
+        Set<Game> games = loggedUser.getGames();
+        if(loggedUser.getGames().contains(game)){
+            throw new IllegalArgumentException("Existing game!");
+        }
+        games.add(game);
+        this.gameRepository.save(game);
+//        this.userRepository.save(loggedUser);
+        return "Game was added successfully!";
+    }
+
+    private String deleteGame(String data) {
+        int idOfGame = Integer.parseInt(data);
+        Game game = this.gameRepository.findAll().stream()
+                .filter(g -> g.getId() == idOfGame)
+                .findFirst()
+                .orElse(null);
+        if(game == null){
+            throw new IllegalArgumentException("Invalid id of game!");
+        }
+        this.gameRepository.delete(game);
+        return String.format("Successfully deleted game!%s", game.getTitle());
     }
 
     private UserBasicInfoDTO logoutUser() {
@@ -68,7 +102,6 @@ public class ExecutorServiceImpl implements ExecutorService {
         Optional<User> user = userService.login(loginData);
         if(user.isPresent()) {
             return this.mapper.map(user.get(), UserBasicInfoDTO.class);
-            //return String.format("Successfully logged in %s", user.get().getFullName());
         }
 //        FIXME:
         return null;
@@ -79,7 +112,6 @@ public class ExecutorServiceImpl implements ExecutorService {
         registerData.validate();
 
         User user = userService.register(registerData);
-        //return String.format("%s was registered", user.getFullName());
         return this.mapper.map(user, UserBasicInfoDTO.class);
     }
 }

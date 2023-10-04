@@ -23,14 +23,15 @@ public class ConsoleRunner implements CommandLineRunner {
         Scanner sc = new Scanner(System.in);
         String command = sc.nextLine();
 
-        String result;
         while(!command.equals("END")) {
+            String result;
             try {
                 result = executorService.execute(command);
             } catch (ValidationException | UserNotLoggedInException ex) {
                 result = ex.getMessage();
             }
             System.out.println(result);
+            command = sc.nextLine();
         }
     }
 }

@@ -1,5 +1,6 @@
 package springdatamodelmapperex.services.servicesImpl;
 
+import springdatamodelmapperex.entites.Game;
 import springdatamodelmapperex.exceptions.UserNotLoggedInException;
 import springdatamodelmapperex.repositories.UserRepository;
 import springdatamodelmapperex.entites.users.LoginDTO;
@@ -57,7 +58,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getLoggedUser(){
-        if(this.currentUser != null){
+        //test only
+        if(this.currentUser == null){
             //throw exception / return;
             throw new UserNotLoggedInException();
         }
@@ -67,7 +69,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void logout() {
 //        if(currentUser != null){
-//        TODO: Cannot lo out. No user logged in.
+//        TODO: Cannot log out. No user logged in.
         this.currentUser = null;
     }
+
 }

@@ -20,21 +20,24 @@ public class ConsoleRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        /*
+        For this exercise input should be:
+        first row - command, second row - data!
+         */
         Scanner sc = new Scanner(System.in);
         String command = sc.nextLine();
-
-        //For Json test
         String commandData = sc.nextLine();
 
-//        while(command){
-        String result;
-        try{
-//            result = executorService.execute(command);
-            result = executorService.execute(command, commandData);
-        }catch(ValidationException | UserNotLoggedInException ex){
-            result = ex.getMessage();
+        while(!command.equals("END")) {
+            String result;
+            try {
+                result = executorService.execute(command, commandData);
+            } catch (ValidationException | UserNotLoggedInException ex) {
+                result = ex.getMessage();
+            }
+            System.out.println(result);
+            command = sc.nextLine();
+            commandData = sc.nextLine();
         }
-
-        System.out.println(result);
     }
 }

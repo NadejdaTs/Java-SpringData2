@@ -1,5 +1,6 @@
 package springdatamodelmapperex.services;
 
+import springdatamodelmapperex.entites.Game;
 import springdatamodelmapperex.entites.users.LoginDTO;
 import springdatamodelmapperex.entites.users.RegisterDTO;
 import springdatamodelmapperex.entites.users.User;
