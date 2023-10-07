@@ -6,6 +6,13 @@ public interface ExecutorService {
     String LOGOUT_USER_COMMAND = "Logout";
     String ADD_GAME_COMMAND = "AddGame";
     String DELETE_GAME_COMMAND = "DeleteGame";
+    String ALL_GAMES_COMMAND = "AllGames";
+    String DETAIL_GAME_VIEW = "DetailGame";
+    String OWNED_GAMES_COMMAND = "OwnedGames";
+    String PURCHASE_GAME_COMMAND = "PurchaseGame";
+    String ADD_ITEM_COMMAND = "AddItem";
+    String REMOVE_ITEM_COMMAND = "RemoveItem";
+    String BUY_ITEM_COMMAND = "BuyItem";
     String execute(String command, String commandData);
 
 //    {

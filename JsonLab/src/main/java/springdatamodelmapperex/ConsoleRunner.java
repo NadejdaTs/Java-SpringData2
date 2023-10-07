@@ -32,12 +32,14 @@ public class ConsoleRunner implements CommandLineRunner {
             String result;
             try {
                 result = executorService.execute(command, commandData);
-            } catch (ValidationException | UserNotLoggedInException ex) {
+            } catch (ValidationException | UserNotLoggedInException | IllegalArgumentException ex) {
                 result = ex.getMessage();
             }
             System.out.println(result);
             command = sc.nextLine();
-            commandData = sc.nextLine();
+            if(!command.equals("AllGames") && !command.equals("OwnedGames")) {
+                commandData = sc.nextLine();
+            }
         }
     }
 }

@@ -8,11 +8,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="SpringDataAdvancedQueringTests" />
         <module name="SpringDataAdvancedQueryngLab" />
+        <module name="AdvancedQueryngLab" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="AdvancedQueryngLab" options="-parameters" />
       <module name="SpringDataAdvancedQueringTests" options="-parameters" />
       <module name="SpringDataAdvancedQueryngLab" options="-parameters" />
     </option>

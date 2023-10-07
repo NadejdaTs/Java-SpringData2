@@ -4,6 +4,7 @@ import springdatamodelmapperex.entites.users.User;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity(name = "orders")
@@ -49,5 +50,18 @@ public class Order {
 
     public void setProducts(Set<Game> products) {
         this.products = products;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return buyer.equals(order.buyer) && products.equals(order.products);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(buyer, products);
     }
 }

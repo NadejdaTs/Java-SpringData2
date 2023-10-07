@@ -5,6 +5,7 @@ import springdatamodelmapperex.entites.Order;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity(name = "users")
@@ -23,7 +24,7 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Game> games;
 
-    @OneToMany(mappedBy = "buyer", targetEntity = Order.class)
+    @OneToMany(mappedBy = "buyer", targetEntity = Order.class, fetch = FetchType.EAGER)
     private Set<Order> orders;
 
     public User(){

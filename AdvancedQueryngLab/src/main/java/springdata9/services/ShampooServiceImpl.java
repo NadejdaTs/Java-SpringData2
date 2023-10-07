@@ -1,5 +1,6 @@
 package springdata9.services;
 
+import springdata9.entities.Ingredient;
 import springdata9.entities.Shampoo;
 import springdata9.entities.Size;
 import springdata9.repositories.LabelRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ShampooServiceImpl implements ShampooService{

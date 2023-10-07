@@ -6,16 +6,22 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
+import org.hibernate.Length;
+import javax.validation.constraints.Size;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity(name = "games")
 public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false)
+
+    @Column(nullable = false, length = 100)
+    @Size(min = 1, max = 3)
     private String title;
     @Column(name = "trailer_id", nullable = false)
     private String trailerId;
@@ -24,6 +30,7 @@ public class Game {
     private float size;
     @Column(nullable = false)
     private BigDecimal price;
+
     private String description;
     @Column(name = "release_date", nullable = false)
 //    @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -41,6 +48,24 @@ public class Game {
         this.price = price;
         this.description = description;
         this.releaseDate = releaseDate;
+
+        this.validateGame();
+    }
+
+    public void validateGame() {
+        if(this.price.compareTo(BigDecimal.valueOf(0)) == -1){
+            throw new IllegalArgumentException("Price must be positive!");
+        }
+        char firstLetter = Character.toUpperCase(title.charAt(0));
+        if((firstLetter != title.charAt(0)) || title.length() < 3 || title.length() > 100
+                || this.size < 0
+                || !this.trailerId.contains("www.youtube.com")
+                || this.description.length() < 20
+                || (!this.thumbnailUrl.contains("http://") && !this.thumbnailUrl.contains("https://"))){
+            throw new IllegalArgumentException("Invalid title!");
+        }
+        this.trailerId = this.trailerId.substring(this.trailerId.length() - 11);
+
     }
 
     public int getId() {
@@ -105,5 +130,18 @@ public class Game {
 
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Game game = (Game) o;
+        return title.equals(game.title) && releaseDate.equals(game.releaseDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, releaseDate);
     }
 }

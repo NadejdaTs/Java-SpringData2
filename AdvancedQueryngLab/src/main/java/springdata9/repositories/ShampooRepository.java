@@ -1,5 +1,7 @@
 package springdata9.repositories;
 
+import org.springframework.data.repository.query.Param;
+import springdata9.entities.Ingredient;
 import springdata9.entities.Shampoo;
 import springdata9.entities.Size;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,8 +32,8 @@ public interface ShampooRepository extends JpaRepository<Shampoo, Long> {
     int countByPriceLessThan(BigDecimal price);
 
     /*@Query("SELECT s FROM Shampoo s" +
-            //" JOIN s.ingredients AS i" +
-            " WHERE s.ingredients.size < :count")
+            " JOIN s.ingredients AS i" +
+            " WHERE count(s.ingredients) < :count")
     List<Shampoo> findByIngredientCountLessThan(int count);*/
 
 }
