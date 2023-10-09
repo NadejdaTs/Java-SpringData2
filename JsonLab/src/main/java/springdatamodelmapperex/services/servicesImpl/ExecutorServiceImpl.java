@@ -1,9 +1,11 @@
 package springdatamodelmapperex.services.servicesImpl;
 
+import springdatamodelmapperex.entites.Cart;
 import springdatamodelmapperex.entites.Game;
 import springdatamodelmapperex.LocalDateTypeAdapter;
 import springdatamodelmapperex.entites.GameViewDTO;
 import springdatamodelmapperex.entites.Order;
+import springdatamodelmapperex.repositories.CartRepository;
 import springdatamodelmapperex.repositories.GameRepository;
 import springdatamodelmapperex.repositories.OrderRepository;
 import springdatamodelmapperex.repositories.UserRepository;
@@ -22,9 +24,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 @Service
 public class ExecutorServiceImpl implements ExecutorService {
@@ -34,6 +36,7 @@ public class ExecutorServiceImpl implements ExecutorService {
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
     private final OrderRepository orderRepository;
+    private CartRepository cartRepository;
 
     private final Gson gson;
     private final ModelMapper mapper;
@@ -41,13 +44,14 @@ public class ExecutorServiceImpl implements ExecutorService {
 
 
     @Autowired
-    public ExecutorServiceImpl(UserService userService, Gson gson, GameService gameService, OrderService orderService, UserRepository userRepository, GameRepository gameRepository, OrderRepository orderRepository) {
+    public ExecutorServiceImpl(UserService userService, Gson gson, GameService gameService, OrderService orderService, UserRepository userRepository, GameRepository gameRepository, OrderRepository orderRepository, CartRepository cartRepository) {
         this.userService = userService;
         this.gameService = gameService;
         this.orderService = orderService;
         this.userRepository = userRepository;
         this.gameRepository = gameRepository;
         this.orderRepository = orderRepository;
+        this.cartRepository = cartRepository;
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
@@ -87,15 +91,24 @@ public class ExecutorServiceImpl implements ExecutorService {
         return null;
     }
 
-    private Object removeItemFromShoppingCart(String title) {
+    private String removeItemFromShoppingCart(String title) {
         User loggedUser = this.userService.getLoggedUser();
         Optional<Game> game = this.gameService.findByTitle(title);
         if(!game.isPresent()) {
             throw new IllegalArgumentException("Not existing game!");
         }
-
-
-        return null;
+        Cart cart = loggedUser.getCart();
+        Set<Game> games = cart.getGames();
+        boolean isExistInCart = games.stream()
+                .noneMatch(g -> g.getTitle().equals(title));
+        if(isExistInCart){
+            throw new IllegalArgumentException("Can not delete!");
+        }
+        games.remove(game.get());
+        this.cartRepository.save(cart);
+        loggedUser.setCart(cart);
+        this.userRepository.save(loggedUser);
+        return String.format("%s removed from cart!", title);
     }
 
     private String addItemToShoppingCart(String title) {
@@ -104,24 +117,26 @@ public class ExecutorServiceImpl implements ExecutorService {
         if(!game.isPresent()) {
             throw new IllegalArgumentException("Not existing game!");
         }
-        Set<Order> orders = loggedUser.getOrders();
-        for (Order order : orders) {
-            Game optGame = order.getProducts().stream()
-                    .filter(g -> g.equals(game.get()))
-                    .findFirst()
-                    .orElse(null);
-            if (optGame != null) {
+        Cart cart = loggedUser.getCart();
+        if(cart != null){
+            Set<Game> games = cart.getGames();
+            boolean isExistInCart = games.stream()
+                    .noneMatch(g -> !g.getTitle().equals(title));
+            if(isExistInCart){
                 throw new IllegalArgumentException("Can not order again!");
             }
+            games.add(game.get());
+            cart.setGames(games);
+        }else{
+            cart = new Cart(loggedUser);
+            Set<Game> newGames = new HashSet<>();
+            newGames.add(game.get());
+            cart.setGames(newGames);
         }
-
-        Set<Game> games = loggedUser.getGames();
-        games.add(game.get());
-        Order order = new Order(loggedUser, games);
-        orders.add(order);
+        this.cartRepository.save(cart);
+        loggedUser.setCart(cart);
         this.userRepository.save(loggedUser);
-        this.orderRepository.save(order);
-        return "Successfully added item in cart!";
+        return String.format("%s added to cart!", title);
     }
 
     private String purchaseGame(String title) {
@@ -192,7 +207,7 @@ public class ExecutorServiceImpl implements ExecutorService {
             throw new IllegalArgumentException("Invalid id of game!");
         }
 //        this.gameRepository.delete(game);
-        this.gameService.deleteById(idOfGame);
+//        this.gameService.deleteById(idOfGame);
         return String.format("Successfully deleted game!%s", game.getTitle());
     }
 

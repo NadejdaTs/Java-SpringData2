@@ -1,5 +1,6 @@
 package springdatamodelmapperex.entites.users;
 
+import springdatamodelmapperex.entites.Cart;
 import springdatamodelmapperex.entites.Game;
 import springdatamodelmapperex.entites.Order;
 import jakarta.persistence.*;
@@ -26,6 +27,9 @@ public class User {
 
     @OneToMany(mappedBy = "buyer", targetEntity = Order.class, fetch = FetchType.EAGER)
     private Set<Order> orders;
+
+    @OneToOne(mappedBy = "user", targetEntity = Cart.class)
+    private Cart cart;
 
     public User(){
         this.games = new HashSet<>();
@@ -93,5 +97,13 @@ public class User {
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }

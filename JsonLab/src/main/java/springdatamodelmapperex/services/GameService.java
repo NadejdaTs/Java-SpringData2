@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface GameService {
     Optional<Game> findByTitle(String title);
 
-    int deleteById(int idOfGame);
+//    int deleteById(int idOfGame);
 }

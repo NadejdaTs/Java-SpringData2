@@ -14,7 +14,7 @@ public interface GameRepository extends JpaRepository<Game, Integer> {
 
     Optional<Game> findByTitle(String title);
 
-    @Query("DELETE g FROM Game g")
+    /*@Query("DELETE g FROM Game g")
     @Modifying
-    int deleteById(int id);
+    int deleteById(int id);*/
 }

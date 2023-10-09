@@ -7,6 +7,8 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
 import org.hibernate.Length;
+import springdatamodelmapperex.entites.users.User;
+
 import javax.validation.constraints.Size;
 
 
@@ -37,6 +39,10 @@ public class Game {
 //    @JsonSerialize(using = LocalDateSerializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate releaseDate;
+
+//    @ManyToOne(optional = true)
+//    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+//    private Cart cart;
 
     public Game(){}
 
@@ -131,6 +137,14 @@ public class Game {
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
+
+    /*public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }*/
 
     @Override
     public boolean equals(Object o) {

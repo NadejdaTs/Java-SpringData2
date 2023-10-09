@@ -21,8 +21,8 @@ public class GameServiceImpl implements GameService {
         return this.gameRepository.findByTitle(title);
     }
 
-    @Override
+    /*@Override
     public int deleteById(int idOfGame) {
         return this.gameRepository.deleteById(idOfGame);
-    }
+    }*/
 }
