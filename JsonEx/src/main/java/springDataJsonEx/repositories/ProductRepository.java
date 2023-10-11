@@ -21,7 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
 
     //@Query("SELECT c.name as category, count(p) as productCount, avg(p.price) as averagePrice, sum(p.price) as totalRevenue" +
     @Query("SELECT new springDataJsonEx.productshop.entities.categories.CategoryStatsDTO(" +
-            "c.name, count(p), avg(p.price), sum(p.price))" +
+            "c.name, COUNT(p), AVG(p.price), SUM(p.price))" +
             " FROM Product p" +
             " JOIN p.categories c" +
             " GROUP BY c")

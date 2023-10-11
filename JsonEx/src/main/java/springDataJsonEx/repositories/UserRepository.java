@@ -17,7 +17,14 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT u FROM User u" +
             " JOIN u.sellingItems p" +
-            " WHERE p.buyer IS NOT NULL" +
-            " ORDER BY size(u.sellingItems) desc, u.lastName asc")
+            " WHERE p.buyer IS NOT NULL")
+//            " ORDER BY size(u.sellingItems) desc, u.lastName asc")
     List<User> findAllWithSoldProductsOrderByCount();
+
+    @Query("SELECT u FROM User AS u " +
+            "JOIN Product AS p ON p.seller.id = u.id " +
+            "WHERE p.buyer IS NOT NULL " +
+            "GROUP BY u.id " +
+            "ORDER BY u.lastName, u.firstName")
+    List<User> getAllBySellContainsProduct_Buyer();
 }

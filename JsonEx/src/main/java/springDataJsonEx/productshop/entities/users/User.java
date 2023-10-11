@@ -32,6 +32,12 @@ public class User {
     @ManyToMany
     private Set<User> friends;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_sells",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "product_id")})
+    private Set<Product> sell;
+
     public User() {
         this.sellingItems = new ArrayList<>();
         this.itemsBought = new ArrayList<>();

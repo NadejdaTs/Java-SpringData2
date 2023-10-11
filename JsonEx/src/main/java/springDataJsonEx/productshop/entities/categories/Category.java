@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
-@Entity(name = "categories")
+@Entity()
+@Table(name = "categories")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

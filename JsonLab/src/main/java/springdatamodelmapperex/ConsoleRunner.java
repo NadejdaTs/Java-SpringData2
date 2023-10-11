@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -25,6 +26,7 @@ public class ConsoleRunner implements CommandLineRunner {
         first row - command, second row - data!
          */
         Scanner sc = new Scanner(System.in);
+        List<String> onlyOneCommandsList = List.of("Logout", "AllGames", "OwnedGames", "BuyItem", "END");
         String command = sc.nextLine();
         String commandData = sc.nextLine();
 
@@ -37,9 +39,13 @@ public class ConsoleRunner implements CommandLineRunner {
             }
             System.out.println(result);
             command = sc.nextLine();
-            if(!command.equals("AllGames") && !command.equals("OwnedGames")) {
+            String finalCommand = command;
+            boolean isOneRowCommand = onlyOneCommandsList.stream()
+                    .anyMatch(c -> finalCommand.equals(c));
+            if(!isOneRowCommand) {
                 commandData = sc.nextLine();
             }
+
         }
     }
 }

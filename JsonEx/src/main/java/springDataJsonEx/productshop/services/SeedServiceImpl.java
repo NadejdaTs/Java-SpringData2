@@ -77,13 +77,13 @@ public class SeedServiceImpl implements SeedService {
                 .map(importDTO -> this.modelMapper.map(importDTO, Product.class))
                 .map(this::setRandomSeller)
                 .map(this::setRandomBuyer)
-                .map(this::sendRandomCategories)
+                .map(this::setRandomCategories)
                 .collect(Collectors.toList());
 
         this.productRepository.saveAll(products);
     }
 
-    private Product sendRandomCategories(Product product) {
+    private Product setRandomCategories(Product product) {
         Random random = new Random();
         long categoriesDBCount = this.categoryRepository.count();
 
@@ -107,7 +107,7 @@ public class SeedServiceImpl implements SeedService {
         }
 
         Optional<User> buyer = getRandomUser();
-        product.setSeller(buyer.get());
+        product.setBuyer(buyer.get());
 
         return product;
     }

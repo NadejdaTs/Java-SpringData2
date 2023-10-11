@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class SoldProductDTO {
     private String name;
     private BigDecimal price;
-    private String BuyerFirstName;
+    private String buyerFirstName;
     private String buyerLastName;
 
     public String getName() {
@@ -25,11 +25,11 @@ public class SoldProductDTO {
     }
 
     public String getBuyerFirstName() {
-        return BuyerFirstName;
+        return buyerFirstName;
     }
 
     public void setBuyerFirstName(String buyerFirstName) {
-        BuyerFirstName = buyerFirstName;
+        this.buyerFirstName = buyerFirstName;
     }
 
     public String getBuyerLastName() {

@@ -42,7 +42,7 @@ public class ProductShopRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        //this.seedService.seedAll();
+        this.seedService.seedAll();
         /*this.productsService.getProductsInPriceRangeForSell(500, 1000)
                 .forEach(dto -> System.out.println(dto.getSeller()));*/
         //productsBetweenPriceWithoutBuyer();
@@ -54,6 +54,8 @@ public class ProductShopRunner implements CommandLineRunner {
         //xmlDemo();
 
         List<CategoryStatsDTO> result = getCategoryStats();
+        String json = this.gson.toJson(result);
+        System.out.println(json);
     }
 
     private void xmlMarshallDemo() throws JAXBException, IOException {

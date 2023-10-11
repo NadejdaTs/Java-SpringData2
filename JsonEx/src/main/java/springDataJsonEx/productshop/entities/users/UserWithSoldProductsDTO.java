@@ -7,7 +7,7 @@ import java.util.List;
 public class UserWithSoldProductsDTO {
     private String firstName;
     private String lastName;
-    private List<SoldProductDTO> itemsBought;
+    private List<SoldProductDTO> sellingItems;
 
     public String getFirstName() {
         return firstName;
@@ -25,11 +25,11 @@ public class UserWithSoldProductsDTO {
         this.lastName = lastName;
     }
 
-    public List<SoldProductDTO> getItemsBought() {
-        return itemsBought;
+    public List<SoldProductDTO> getSellingItems() {
+        return sellingItems;
     }
 
-    public void setItemsBought(List<SoldProductDTO> itemsBought) {
-        this.itemsBought = itemsBought;
+    public void setSellingItems(List<SoldProductDTO> sellingItems) {
+        this.sellingItems = sellingItems;
     }
 }

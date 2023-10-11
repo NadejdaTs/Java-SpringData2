@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -87,8 +88,26 @@ public class ExecutorServiceImpl implements ExecutorService {
         }
     }
 
-    private Object buyItemFromShoppingCart() {
-        return null;
+    private String buyItemFromShoppingCart() {
+        User loggedUser = this.userService.getLoggedUser();
+        Cart cart = loggedUser.getCart();
+        if(cart == null){
+            throw new IllegalArgumentException("Noting to buy!");
+        }
+        Set<Game> cartItems = cart.getGames();
+        Set<Game> games = loggedUser.getGames();
+        for (Game item : cartItems) {
+            games.add(item);
+        }
+        loggedUser.setCart(null);
+        this.userRepository.save(loggedUser);
+        this.cartRepository.delete(cart);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Successfully bought games: ");
+        games.stream()
+                .forEach(g -> sb.append(" -").append(g.getTitle())
+                        .append(System.lineSeparator()));
+        return sb.toString().trim();
     }
 
     private String removeItemFromShoppingCart(String title) {
@@ -156,7 +175,7 @@ public class ExecutorServiceImpl implements ExecutorService {
         StringBuilder sb = new StringBuilder();
         loggedUser.getGames().stream().
                 forEach(g -> sb.append(g.getTitle()).append(System.lineSeparator()));
-        return sb.toString();
+        return sb.toString().trim();
     }
 
     private String detailGameView(String title) {
