@@ -1,34 +1,35 @@
 package carDealer.entities.cars;
 
-import com.google.gson.annotations.SerializedName;
+import carDealer.entities.parts.PartSimpleDTO;
 
-import java.io.Serializable;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
-public class CarWithPartsDTO implements Serializable {
-    @SerializedName("Make")
-    private String make;
+public class CarWithPartsDTO {
+    private CarShortDTO car;
+    private Set<PartSimpleDTO> parts;
 
-    @SerializedName("Model")
-    private String model;
+    public CarWithPartsDTO() {}
 
-    @SerializedName("TravelledDistance")
-    private Long travelledDistance;
-
-    public CarWithPartsDTO(String make, String model, Long travelledDistance) {
-        this.make = make;
-        this.model = model;
-        this.travelledDistance = travelledDistance;
+    public CarWithPartsDTO(CarShortDTO car) {
+        this.car = car;
+        this.parts = new HashSet<>();
     }
 
-    public String getMake() {
-        return make;
+    public CarShortDTO getCar() {
+        return car;
     }
 
-    public String getModel() {
-        return model;
+    public Set<PartSimpleDTO> getParts() {
+        return Collections.unmodifiableSet(parts);
     }
 
-    public Long getTravelledDistance() {
-        return travelledDistance;
+    public void setCar(CarShortDTO car) {
+        this.car = car;
+    }
+
+    public void setParts(Set<PartSimpleDTO> parts) {
+        this.parts = parts;
     }
 }

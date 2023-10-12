@@ -22,4 +22,9 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> findAllOrderByBirthDateIsYoungDriver() {
         return this.customerRepository.findAllByBirthDate();
     }
+
+    @Override
+    public List<CustomerAllDTO> findAllOrderedCustomerByBirthDateAndIsYoungDriver() {
+        return this.customerRepository.findAllOrderedCustomer();
+    }
 }

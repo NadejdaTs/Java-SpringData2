@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class SeedServiceImpl implements SeedService {
@@ -173,28 +174,34 @@ public class SeedServiceImpl implements SeedService {
     }
 
     private Car getRandomParts(Car car) {
-        long count = this.partRepository.count();
+        /**
+         * Import data from the provided files (suppliers.json, parts.json, cars.json, customers.json).
+         * First import the suppliers.
+         * When importing the parts, set to each part a random supplier from the already imported suppliers.
+         * Then, when importing the cars add between 3 and 5 random parts to each car. Then import all customers.
+         * Finally, import the sales records by randomly selecting a car, customer and the amount of discount
+         * to be applied (discounts can be 0%, 5%, 10%, 15%, 20%, 30%, 40% or 50%).
+         */
+        long countDBParts = this.partRepository.count();
 
         Random random = new Random();
         Set<Part> partSet = new HashSet<>();
-//        int randomParts = random.nextInt(3, 5);
-//        int randomParts = 3 + random.nextInt(5 - 3 + 1);
-        Random random1 = new Random();
-        int randomParts = random1.nextInt(5) + 1;
-        if(randomParts < 3){
-            randomParts = 3;
-        }
-        if(randomParts > 5){
-            randomParts = 5;
-        }
+        int count = random.nextInt(3, 5);
+        for (int i = 0; i < 2; i++) {
+            int partId = random.nextInt((int) countDBParts) + 1;
 
-//        Random randomForParts = new Random();
-        for (int i = 0; i < randomParts; i++) {
-            int partId = random.nextInt((int) count) + 1;
-            boolean isSameId = partSet.stream().noneMatch(p -> p.getId() == partId);
-            if(isSameId && partSet.size() < 6) {
+            Part currPart = null;
+            if(!partSet.isEmpty()){
+                currPart = partSet.stream()
+                        .filter(p -> p.getId() == partId)
+                        .findFirst()
+                        .orElse(null);
+            }
+
+            if(!partSet.contains(currPart)) {
                 Optional<Part> part = this.partRepository.findById((long) partId);
                 partSet.add(part.get());
+                this.partRepository.save(part.get());
             }
         }
 

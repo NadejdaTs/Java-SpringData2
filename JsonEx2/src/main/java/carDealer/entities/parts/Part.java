@@ -25,7 +25,7 @@ public class Part {
     @ManyToOne
     private Supplier supplier;
 
-    @ManyToMany(mappedBy = "parts", targetEntity = Car.class)
+    @ManyToMany(mappedBy = "parts", targetEntity = Car.class, fetch = FetchType.EAGER)
     private Set<Car> cars;
 
     public Part() {

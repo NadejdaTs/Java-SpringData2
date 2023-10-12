@@ -1,9 +1,11 @@
 package carDealer.entities.customers;
 
-import carDealer.entities.sales.SaleViewDTO;
+import carDealer.entities.sales.Sale;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 public class CustomerAllDTO {
@@ -20,14 +22,16 @@ public class CustomerAllDTO {
     private boolean isYoungDriver;
 
     @SerializedName("Sales")
-    private Long purchases;
+    private Set<Sale> purchases;
 
-    public CustomerAllDTO(Long id, String name, LocalDateTime birthDate, boolean isYoungDriver, Long purchases) {
+    public CustomerAllDTO() {}
+
+    public CustomerAllDTO(Long id, String name, LocalDateTime birthDate, boolean isYoungDriver) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
         this.isYoungDriver = isYoungDriver;
-        this.purchases = purchases;
+        this.purchases = new HashSet<>();
     }
 
     public Long getId() {
@@ -46,7 +50,27 @@ public class CustomerAllDTO {
         return isYoungDriver;
     }
 
-    public Long getPurchases() {
-        return purchases;
+    public Set<Sale> getPurchases() {
+        return Collections.unmodifiableSet(purchases);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBirthDate(LocalDateTime birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setYoungDriver(boolean youngDriver) {
+        isYoungDriver = youngDriver;
+    }
+
+    public void setPurchases(Set<Sale> purchases) {
+        this.purchases = purchases;
     }
 }

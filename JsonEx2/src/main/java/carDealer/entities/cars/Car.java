@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 @Entity
@@ -22,7 +23,7 @@ public class Car {
     @Column(name = "travelled_distance")
     private Long travelledDistance;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "parts_cars",
             joinColumns = @JoinColumn(name = "part_id", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name = "car_id", referencedColumnName = "id"))
@@ -78,4 +79,5 @@ public class Car {
     public void setParts(Set<Part> parts) {
         this.parts = Collections.unmodifiableSet(parts);
     }
+
 }
