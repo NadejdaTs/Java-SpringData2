@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import springXmlEx.productshop.entities.categories.Category;
 import springXmlEx.productshop.entities.categories.CategoriesImportDTO;
 import springXmlEx.productshop.entities.products.Product;
+import springXmlEx.productshop.entities.products.ProductImportDTO;
 import springXmlEx.productshop.entities.products.ProductsImportDTO;
 import springXmlEx.productshop.entities.users.User;
 import springXmlEx.productshop.entities.users.UsersImportDTO;

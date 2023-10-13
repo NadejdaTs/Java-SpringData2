@@ -1,8 +1,8 @@
 package examPrep.service.impl;
 
-import examPrep.model.ImportShopDTO;
-import examPrep.model.ImportShopsDTO;
-import examPrep.model.Shop;
+import examPrep.model.entities.shops.ImportShopDTO;
+import examPrep.model.entities.shops.ImportShopsDTO;
+import examPrep.model.entities.shops.Shop;
 import examPrep.repository.ShopRepository;
 import examPrep.service.ShopService;
 import org.modelmapper.ModelMapper;

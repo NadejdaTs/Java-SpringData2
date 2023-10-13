@@ -23,10 +23,10 @@ public class User {
 
     private Integer age;
 
-    @OneToMany(targetEntity = Product.class, mappedBy = "seller")
+    @OneToMany(mappedBy = "seller", targetEntity = Product.class)
     private List<Product> sellingItems;
 
-    @OneToMany(targetEntity = Product.class, mappedBy = "buyer")
+    @OneToMany(mappedBy = "buyer", targetEntity = Product.class)
     private List<Product> itemsBought;
 
     @ManyToMany

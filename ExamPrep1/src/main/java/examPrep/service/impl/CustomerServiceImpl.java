@@ -2,35 +2,42 @@ package examPrep.service.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import examPrep.model.*;
+import examPrep.model.entities.customers.Customer;
+import examPrep.model.entities.towns.Town;
+import examPrep.model.entities.customers.ImportCustomersDTO;
 import examPrep.repository.CustomerRepository;
+import examPrep.repository.TownRepository;
 import examPrep.service.CustomerService;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
+    private final TownRepository townRepository;
     private final Path customersPath = Path.of("src", "main", "resources", "files", "json", "customers.json");
 
     private final Gson gson;
     private ModelMapper mapper;
 
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, TownRepository townRepository) {
         this.customerRepository = customerRepository;
+        this.townRepository = townRepository;
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
@@ -51,40 +58,29 @@ public class CustomerServiceImpl implements CustomerService {
     public String importCustomers() throws IOException {
         FileReader reader = new FileReader(customersPath.toAbsolutePath().toString());
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        Converter<String, LocalDate> toLocalDate = ctx -> ctx.getSource() != null ? LocalDate.parse(ctx.getSource(), formatter) : null;
 
-        Customer[] customers1 = this.gson.fromJson(reader, Customer[].class);
+        TypeMap<ImportCustomersDTO, Customer> typeMapDate = this.mapper.createTypeMap(ImportCustomersDTO.class, Customer.class);
 
-//        ImportCustomerTownNameDTO
         ImportCustomersDTO[] importCustomersDTOS = this.gson.fromJson(reader, ImportCustomersDTO[].class);
         List<Customer> customers = Arrays.stream(importCustomersDTOS)
-                .map(custDTO -> this.mapper.map(custDTO, Customer.class))
+                .map(custDTO -> {
+                    Optional<Town> town = this.townRepository.findByName(custDTO.getTown().getName());
+
+                    Customer customer = typeMapDate.addMappings(m -> m
+                                    .using(toLocalDate)
+                                    .map(src -> src.getRegisteredOn(),
+                                            Customer::setRegisteredOn))
+                            .map(custDTO);
+                    customer.setTown(town.get());
+
+                    return customer;
+                })
                 .collect(Collectors.toList());
 
         this.customerRepository.saveAll(customers);
-        return "This is";
-
-        //customerJsonDtos.add(addressJsonDtoBulgaria);
-
-        //String result1 = this.gson.fromJson(customerJsonDtos);
-
-/*
-        for (ImportShopDTO sh : shops.getShops()) {
-            if(sh.isValid()){
-                Optional<Shop> optShop = this.shopRepository.findByName(sh.getName());
-                if(optShop.isPresent()){
-                    result.add("Shop already exist");
-                }else{
-                    Shop shop = this.mapper.map(sh, Shop.class);
-                    this.shopRepository.save(shop);
-                    result.add("Saved shop " + shop.getName());
-                }
-            }else{
-                result.add("Invalid shop");
-            }
-        }
-        */
-
-//        return String.join(System.lineSeparator(), result);
+        return "Successfully imported customers!";
     }
 
 }

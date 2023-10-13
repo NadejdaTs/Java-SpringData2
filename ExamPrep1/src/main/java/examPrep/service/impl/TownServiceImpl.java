@@ -1,10 +1,12 @@
 package examPrep.service.impl;
 
-import examPrep.model.ImportTownDTO;
-import examPrep.model.ImportTownsDTO;
-import examPrep.model.Town;
+import examPrep.model.entities.towns.ImportTownDTO;
+import examPrep.model.entities.towns.ImportTownsDTO;
+import examPrep.model.entities.towns.Town;
 import examPrep.repository.TownRepository;
 import examPrep.service.TownService;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Service;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;

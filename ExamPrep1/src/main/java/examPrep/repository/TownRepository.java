@@ -1,7 +1,7 @@
 package examPrep.repository;
 
 
-import examPrep.model.Town;
+import examPrep.model.entities.towns.Town;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

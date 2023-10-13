@@ -1,6 +1,6 @@
 package examPrep.repository;
 
-import examPrep.model.Customer;
+import examPrep.model.entities.customers.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
