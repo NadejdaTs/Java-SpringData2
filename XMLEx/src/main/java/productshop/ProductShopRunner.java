@@ -41,7 +41,7 @@ public class ProductShopRunner implements CommandLineRunner {
 //        Query 1
 //        productsInRange();
 //        Query 2
-        findUserWithSoldProducts();
+//        findUserWithSoldProducts();
 //        Query 3
 //        getCategoryProducts();
 //        Query 4
