@@ -4,7 +4,6 @@ import carDealer.entities.cars.CarShortDTO;
 import carDealer.entities.cars.CarViewDTO;
 import carDealer.entities.cars.CarWithPartsDTO;
 import carDealer.entities.customers.Customer;
-import carDealer.entities.customers.CustomerAllDTO;
 import carDealer.entities.customers.CustomerOrderedByBirthDayDTO;
 import carDealer.entities.customers.CustomerPurchasesViewDTO;
 import carDealer.entities.parts.Part;
@@ -31,7 +30,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ProductShopRunner implements CommandLineRunner {
+public class CarDealerRunner implements CommandLineRunner {
     private final Gson gson;
     private final ModelMapper mapper;
     private final SeedService seedService;
@@ -43,7 +42,9 @@ public class ProductShopRunner implements CommandLineRunner {
     private final SupplierService supplierService;
 
     @Autowired
-    public ProductShopRunner(SeedService seedService, CustomerService customerService, CustomerRepository customerRepository, SaleRepository saleRepository, CarRepository carRepository, CarService carService, SupplierService supplierService) {
+    public CarDealerRunner(SeedService seedService, CustomerService customerService,
+                           CustomerRepository customerRepository, SaleRepository saleRepository,
+                           CarRepository carRepository, CarService carService, SupplierService supplierService) {
         this.customerRepository = customerRepository;
         this.saleRepository = saleRepository;
         this.carRepository = carRepository;

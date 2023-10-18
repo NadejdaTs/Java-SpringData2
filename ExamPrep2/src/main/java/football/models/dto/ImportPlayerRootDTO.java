@@ -12,6 +12,12 @@ public class ImportPlayerRootDTO {
     @XmlElement(name = "player")
     private List<ImportPlayerDTO> players;
 
+    public ImportPlayerRootDTO() {}
+
+    public ImportPlayerRootDTO(List<ImportPlayerDTO> players) {
+        this.players = players;
+    }
+
     public List<ImportPlayerDTO> getPlayers() {
         return players;
     }
