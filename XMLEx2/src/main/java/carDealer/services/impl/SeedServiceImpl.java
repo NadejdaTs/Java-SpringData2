@@ -63,11 +63,14 @@ public class SeedServiceImpl implements SeedService {
         CustomersImpostDTO importDTOs = (CustomersImpostDTO) unmarshaller.unmarshal(reader);
 
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-        Converter<String, LocalDateTime> toLocalDateTime = ctx -> ctx.getSource() != null ? LocalDateTime.parse(ctx.getSource(), formatter) : null;
+        Converter<String, LocalDateTime> toLocalDateTime = ctx -> ctx.getSource() != null
+                ? LocalDateTime.parse(ctx.getSource(), formatter)
+                : null;
         TypeMap<CustomerImportDTO, Customer> typeMap = this.mapper.createTypeMap(CustomerImportDTO.class, Customer.class);
 
         Set<Customer> customers = importDTOs.getCustomers().stream()
-                .map(dto -> typeMap.addMappings(m -> m.using(toLocalDateTime).map(src -> src.getBirthDate(), Customer::setBirthDate)).map(dto))
+                .map(dto -> typeMap.addMappings(m -> m.using(toLocalDateTime)
+                        .map(src -> src.getBirthDate(), Customer::setBirthDate)).map(dto))
                 .collect(Collectors.toSet());
 
         this.customerRepository.saveAll(customers);
