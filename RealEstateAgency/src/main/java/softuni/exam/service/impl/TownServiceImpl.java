@@ -1,9 +1,7 @@
 package softuni.exam.service.impl;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,27 +15,23 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class TownServiceImpl implements TownService {
     private final TownRepository townRepository;
 
-    private final Gson gson;
-    private final ModelMapper mapper;
-    private final Validator validator;
+    @Autowired
+    private Gson gson;
+    @Autowired
+    private ModelMapper mapper;
+    @Autowired
+    private Validator validator;
 
     private Path townFilePath = Path.of("src", "main", "resources", "files", "json", "towns.json");
 
     @Autowired
     public TownServiceImpl(TownRepository townRepository) {
         this.townRepository = townRepository;
-        this.gson = new GsonBuilder()
-                .create();
-        this.mapper = new ModelMapper();
-        this.validator = Validation
-                .buildDefaultValidatorFactory()
-                .getValidator();
     }
 
     public boolean areImported() {

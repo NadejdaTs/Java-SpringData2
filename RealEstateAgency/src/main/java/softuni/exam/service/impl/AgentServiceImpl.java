@@ -1,9 +1,7 @@
 package softuni.exam.service.impl;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +25,12 @@ import java.util.Set;
 public class AgentServiceImpl implements AgentService {
     private final AgentRepository agentRepository;
     private final TownRepository townRepository;
-    private final Gson gson;
-    private final ModelMapper mapper;
-    private final Validator validator;
+    @Autowired
+    private Gson gson;
+    @Autowired
+    private ModelMapper mapper;
+    @Autowired
+    private Validator validator;
 
     private Path agentFilePath = Path.of("src", "main", "resources", "files", "json", "agents.json");
 
@@ -37,12 +38,6 @@ public class AgentServiceImpl implements AgentService {
     public AgentServiceImpl(AgentRepository agentRepository, TownRepository townRepository) {
         this.agentRepository = agentRepository;
         this.townRepository = townRepository;
-        this.gson = new GsonBuilder()
-                .create();
-        this.mapper = new ModelMapper();
-        this.validator = Validation
-                .buildDefaultValidatorFactory()
-                .getValidator();
     }
 
     @Override

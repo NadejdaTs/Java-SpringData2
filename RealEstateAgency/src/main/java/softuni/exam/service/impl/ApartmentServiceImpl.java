@@ -1,9 +1,5 @@
 package softuni.exam.service.impl;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,9 +26,8 @@ import java.util.Optional;
 public class ApartmentServiceImpl implements ApartmentService {
     private final ApartmentRepository apartmentRepository;
     private final TownRepository townRepository;
-    private final Gson gson;
-    private final ModelMapper mapper;
-    private final Validator validator;
+    @Autowired
+    private ModelMapper mapper;
 
     private Path apartmentFilePath = Path.of("src", "main", "resources", "files", "xml", "apartments.xml");
 
@@ -40,12 +35,6 @@ public class ApartmentServiceImpl implements ApartmentService {
     public ApartmentServiceImpl(ApartmentRepository apartmentRepository, TownRepository townRepository) {
         this.apartmentRepository = apartmentRepository;
         this.townRepository = townRepository;
-        this.gson = new GsonBuilder()
-                .create();
-        this.mapper = new ModelMapper();
-        this.validator = Validation
-                .buildDefaultValidatorFactory()
-                .getValidator();
     }
 
     @Override

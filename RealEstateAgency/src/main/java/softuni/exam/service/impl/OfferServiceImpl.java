@@ -1,12 +1,7 @@
 package softuni.exam.service.impl;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import softuni.exam.models.dto.*;
@@ -32,16 +27,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
     private final AgentRepository agentRepository;
     private final ApartmentRepository apartmentRepository;
-    private final Gson gson;
-    private final ModelMapper mapper;
-    private final Validator validator;
+    @Autowired
+    private ModelMapper mapper;
 
     private Path offerFilePath = Path.of("src", "main", "resources", "files", "xml", "offers.xml");
 
@@ -50,12 +43,6 @@ public class OfferServiceImpl implements OfferService {
         this.offerRepository = offerRepository;
         this.agentRepository = agentRepository;
         this.apartmentRepository = apartmentRepository;
-        this.gson = new GsonBuilder()
-                .create();
-        this.mapper = new ModelMapper();
-        this.validator = Validation
-                .buildDefaultValidatorFactory()
-                .getValidator();
     }
 
     @Override
