@@ -43,9 +43,11 @@ public class ForecastServiceImpl implements ForecastService {
     private Path forecastFilePath = Path.of("src", "main", "resources", "files", "xml", "forecasts.xml");
 
     @Autowired
-    public ForecastServiceImpl(ForecastRepository forecastRepository, CityRepository cityRepository) {
+    public ForecastServiceImpl(ForecastRepository forecastRepository, CityRepository cityRepository, ModelMapper mapper, Validator validator) {
         this.forecastRepository = forecastRepository;
         this.cityRepository = cityRepository;
+        this.mapper = mapper;
+        this.validator = validator;
     }
 
     public boolean areImported() {

@@ -29,8 +29,11 @@ public class CountryServiceImpl implements CountryService {
     private Path countryFilePath = Path.of("src", "main", "resources", "files", "json", "countries.json");
 
     @Autowired
-    public CountryServiceImpl(CountryRepository countryRepository) {
+    public CountryServiceImpl(CountryRepository countryRepository, ModelMapper mapper, Gson gson, Validator validator) {
         this.countryRepository = countryRepository;
+        this.mapper = mapper;
+        this.gson = gson;
+        this.validator = validator;
     }
 
     public boolean areImported() {
@@ -46,7 +49,6 @@ public class CountryServiceImpl implements CountryService {
 
         List<String> result = new ArrayList<>();
         for (ImportCountryDTO countryDTO : importCountryDTO) {
-//            boolean isValidCountry = countryDTO.validate();
             Set<ConstraintViolation<ImportCountryDTO>> validatorError = this.validator.validate(countryDTO);
             Optional<Country> optCountry = this.countryRepository.findByCountryName(countryDTO.getCountryName());
 

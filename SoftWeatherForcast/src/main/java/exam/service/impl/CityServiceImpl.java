@@ -35,9 +35,12 @@ public class CityServiceImpl implements CityService {
     private Path cityFilePath = Path.of("src", "main", "resources", "files", "json", "cities.json");
 
     @Autowired
-    public CityServiceImpl(CityRepository cityRepository, CountryRepository countryRepository) {
+    public CityServiceImpl(CityRepository cityRepository, CountryRepository countryRepository, ModelMapper mapper, Gson gson, Validator validator) {
         this.cityRepository = cityRepository;
         this.countryRepository = countryRepository;
+        this.mapper = mapper;
+        this.gson = gson;
+        this.validator = validator;
     }
 
     public boolean areImported() {
@@ -53,7 +56,6 @@ public class CityServiceImpl implements CityService {
 
         List<String> result = new ArrayList<>();
         for (ImportCityDTO cityDTO : importCityDTO) {
-//            boolean isValidCity = cityDTO.validate();
             Set<ConstraintViolation<ImportCityDTO>> validatorError = this.validator.validate(cityDTO);
             Optional<City> optCity = this.cityRepository.findByCityName(cityDTO.getCityName());
 
