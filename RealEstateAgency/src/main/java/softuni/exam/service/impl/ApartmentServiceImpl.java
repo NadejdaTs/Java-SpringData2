@@ -51,7 +51,8 @@ public class ApartmentServiceImpl implements ApartmentService {
     public String importApartments() throws IOException, JAXBException {
         JAXBContext context = JAXBContext.newInstance(ImportApartmentDTO.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
-        ImportApartmentDTO apartmentDTOs = (ImportApartmentDTO) unmarshaller.unmarshal(new FileReader(apartmentFilePath.toAbsolutePath().toString()));
+        ImportApartmentDTO apartmentDTOs = (ImportApartmentDTO) unmarshaller.unmarshal(
+                new FileReader(apartmentFilePath.toAbsolutePath().toString()));
 
         List<String> result = new ArrayList<>();
         for (ApartmentDTO apartmentDTO : apartmentDTOs.getApartments()) {
@@ -59,7 +60,8 @@ public class ApartmentServiceImpl implements ApartmentService {
                 Apartment apartment = this.mapper.map(apartmentDTO, Apartment.class);
                 Optional<Town> optTown = this.townRepository.findByName(apartmentDTO.getTown());
 
-                Optional<Apartment> optApartment = this.apartmentRepository.findByTownNameAndArea(optTown.get().getName(), apartmentDTO.getArea());
+                Optional<Apartment> optApartment = this.apartmentRepository
+                        .findByTownNameAndArea(optTown.get().getName(), apartmentDTO.getArea());
                 if(optApartment.isEmpty()){
                     apartment.setTown(optTown.get());
                     this.apartmentRepository.save(apartment);

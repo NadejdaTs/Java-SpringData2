@@ -40,7 +40,6 @@ public class TownServiceImpl implements TownService {
         this.mapper = new ModelMapper();
     }
 
-
     @Override
     public boolean areImported() {
         return this.townRepository.count() > 0;

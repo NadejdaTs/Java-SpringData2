@@ -62,8 +62,6 @@ public class LaptopServiceImpl implements LaptopService {
         FileReader reader = new FileReader(laptopsPath.toAbsolutePath().toString());
 
         LaptopImportDTO[] laptopDTOS = this.gson.fromJson(reader, LaptopImportDTO[].class);
-
-//        TypeMap<LaptopImportDTO, Laptop> typeMap = this.mapper.createTypeMap(LaptopImportDTO.class, Laptop.class);
         for (LaptopImportDTO laptopDTO : laptopDTOS) {
             if(laptopDTO.validate()){
                 Set<ConstraintViolation<LaptopImportDTO>> validationErrors = this.validator.validate(laptopDTO);

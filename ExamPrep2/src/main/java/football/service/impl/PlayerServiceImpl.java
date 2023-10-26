@@ -11,7 +11,6 @@ import football.repository.StatRepository;
 import football.repository.TeamRepository;
 import football.repository.TownRepository;
 import football.service.PlayerService;
-import football.models.dto.ImportPlayerDTO;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

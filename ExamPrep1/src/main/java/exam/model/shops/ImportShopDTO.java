@@ -22,10 +22,6 @@ public class ImportShopDTO {
     @XmlElement(name = "shop-area")
     private int shopArea;
 
-//    @XmlElementWrapper(name = "town")
-//    @XmlElement(name = "town")
-//    private List<ImportTownNameDTO> townNames;
-
     @XmlElement(name = "town")
     private TownNameDTO town;
 

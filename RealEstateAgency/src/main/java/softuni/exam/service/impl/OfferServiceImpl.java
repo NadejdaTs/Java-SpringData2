@@ -90,7 +90,8 @@ public class OfferServiceImpl implements OfferService {
                     offer.setApartment(apartment.get());
                     offer.setAgent(agent.get());
 
-                    LocalDate currDate = LocalDate.parse(offerDTO.getPublishedOn(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                    LocalDate currDate = LocalDate.parse(offerDTO.getPublishedOn(),
+                            DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                     offer.setPublishedOn(currDate);
                     offer.setPrice(offerDTO.getPrice());
 

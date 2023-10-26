@@ -54,7 +54,8 @@ public class TownServiceImpl implements TownService {
                 if(optTown.isEmpty() && townDTO.getPopulation() > 1){
                     Town town = this.mapper.map(townDTO, Town.class);
                     this.townRepository.save(town);
-                    result.add(String.format("Successfully imported town %s - %d", town.getName(), town.getPopulation()));
+                    result.add(String.format("Successfully imported town %s - %d",
+                            town.getName(), town.getPopulation()));
                 }else {
                     result.add("Invalid town!");
                 }

@@ -58,13 +58,15 @@ public class AgentServiceImpl implements AgentService {
         for (ImportAgentDTO agentDTO : importAgentDTO) {
             Set<ConstraintViolation<ImportAgentDTO>> validatorError = this.validator.validate(agentDTO);
             if(validatorError.isEmpty()) {
-                Optional<Agent> optAgent = this.agentRepository.findByFirstNameOrEmail(agentDTO.getFirstName(), agentDTO.getEmail());
+                Optional<Agent> optAgent = this.agentRepository
+                        .findByFirstNameOrEmail(agentDTO.getFirstName(), agentDTO.getEmail());
                 if (optAgent.isEmpty()) {
                     Agent agent = this.mapper.map(agentDTO, Agent.class);
                     Optional<Town> optTown = this.townRepository.findByName(agentDTO.getTown());
                     agent.setTown(optTown.get());
                     this.agentRepository.save(agent);
-                    result.add(String.format("Successfully imported agent - %s %s", agent.getFirstName(), agent.getLastName()));
+                    result.add(String.format("Successfully imported agent - %s %s",
+                            agent.getFirstName(), agent.getLastName()));
                 } else {
                     result.add("Invalid agent!");
                 }
