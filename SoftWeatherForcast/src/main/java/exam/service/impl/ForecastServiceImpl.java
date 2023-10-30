@@ -33,11 +33,7 @@ import java.util.Set;
 public class ForecastServiceImpl implements ForecastService {
     private final ForecastRepository forecastRepository;
     private final CityRepository cityRepository;
-
-    @Autowired
     private ModelMapper mapper;
-
-    @Autowired
     private Validator validator;
 
     private Path forecastFilePath = Path.of("src", "main", "resources", "files", "xml", "forecasts.xml");

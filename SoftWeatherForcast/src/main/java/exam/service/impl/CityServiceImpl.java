@@ -25,12 +25,8 @@ import java.util.Set;
 public class CityServiceImpl implements CityService {
     private final CityRepository cityRepository;
     private final CountryRepository countryRepository;
-    @Autowired
     private ModelMapper mapper;
-    @Autowired
     private Gson gson;
-
-    @Autowired
     private Validator validator;
     private Path cityFilePath = Path.of("src", "main", "resources", "files", "json", "cities.json");
 

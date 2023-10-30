@@ -19,12 +19,8 @@ import java.util.*;
 @Service
 public class CountryServiceImpl implements CountryService {
     private final CountryRepository countryRepository;
-    @Autowired
     private ModelMapper mapper;
-    @Autowired
     private Gson gson;
-
-    @Autowired
     private Validator validator;
     private Path countryFilePath = Path.of("src", "main", "resources", "files", "json", "countries.json");
 
